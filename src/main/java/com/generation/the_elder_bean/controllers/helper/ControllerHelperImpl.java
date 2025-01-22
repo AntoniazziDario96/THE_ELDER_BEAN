@@ -1,49 +1,37 @@
 package com.generation.the_elder_bean.controllers.helper;
 
+import com.generation.the_elder_bean.models.entities.Combattimento;
 import com.generation.the_elder_bean.models.entities.Personaggio;
+import com.generation.the_elder_bean.models.repositories.PersonaggioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.Random;
-
+@Service
 public class ControllerHelperImpl implements ControllerHelper
 {
-	public void Combattimento(Personaggio personaggio1, Personaggio personaggio2)
+
+	@Autowired
+	PersonaggioRepository pgRep;
+
+
+
+
+	@Override
+	public Personaggio combattenteByid(long id)
 	{
-		while (personaggio1.getVita() < 0 || personaggio2.getVita() < 0 || round == 10) ;
-		{
 
-			Random random = new Random();
+		Personaggio pg1 = pgRep.findById(id).get();
 
+		return pg1;
+	}
 
-			Personaggio personaggioInizio = null;
-			Personaggio personaggioFinali = null;
-
-			long velocitap1, velocitap2;
-
-			// Ciclo che ripete il calcolo delle velocità finché non sono diverse
-			do
-			{
-				velocitap1 = personaggio1.getVelocita() + random.nextInt(6) + 1;
-				velocitap2 = personaggio2.getVelocita() + random.nextInt(6) + 1;
-
-				// Debug per vedere le velocità generate
-				System.out.println("Velocità P1: " + velocitap1 + " - Velocità P2: " + velocitap2);
-			} while (velocitap1 == velocitap2);  // Continua finché le velocità sono uguali
-
-			// Ora che le velocità sono diverse, assegna i personaggi
-			if (velocitap1 > velocitap2)
-			{
-				personaggioInizio = personaggio1;
-				personaggioFinali = personaggio2;
-			}
-			else
-			{
-				personaggioInizio = personaggio2;
-				personaggioFinali = personaggio1;
-			}
-
-
-		}
-
-
+	@Override
+	public Combattimento combattiamoooo(long id1, long id2)
+	{
+		Personaggio pg1 = combattenteByid(id1);
+		Personaggio pg2 = combattenteByid(id2);
+		Combattimento combat = new Combattimento(pg1, pg2);
+		combat.combatti();
+		return combat;
 	}
 }

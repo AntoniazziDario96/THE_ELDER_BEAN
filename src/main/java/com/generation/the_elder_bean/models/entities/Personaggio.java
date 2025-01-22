@@ -8,7 +8,8 @@ import java.util.List;
 public class Personaggio extends BaseEntity
 {
 	private String nome;
-	private long attacco, difesa, evasione, velocita, critico, esperienza, livello, vita, stamina,gold;
+	private long attacco, difesa, evasione, velocita, critico,vita, esperienza, livello, stamina,gold;
+
 
 	public long getAttacco()
 	{
