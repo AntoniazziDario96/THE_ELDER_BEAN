@@ -12,6 +12,15 @@ public class Turno
 	private long vitaPersonaggio1, vitaPersonaggio2, dannoPersonaggio1, dannoPersonaggio2;
 	private boolean evasoPersonaggio1, evasoPersonaggio2, crittatoPersonaggio1, crittatoPersonaggio2;
 
+	public String getPrimoAdAttaccare()
+	{
+		return primoAdAttaccare;
+	}
+
+	public String getSecondoAdAttaccare()
+	{
+		return secondoAdAttaccare;
+	}
 
 	public long getVitaPersonaggio1()
 	{
@@ -80,9 +89,9 @@ public class Turno
 
 		Personaggio[] ordine = velocità(personaggio1, personaggio2);
 		Personaggio p1 = ordine[0];
-		primoAdAttaccare=p1.getNome();
+		primoAdAttaccare = p1.getNome();
 		Personaggio p2 = ordine[1];
-		secondoAdAttaccare=p2.getNome();
+		secondoAdAttaccare = p2.getNome();
 
 		vitaPersonaggio1 = p1.getVita();
 		vitaPersonaggio2 = p2.getVita();
@@ -168,7 +177,7 @@ public class Turno
 
 	}
 
-//calcola chi inizia il turno
+	//calcola chi inizia il turno
 	public Personaggio[] velocità(Personaggio personaggio1, Personaggio personaggio2)
 	{
 		Random random = new Random();
@@ -189,14 +198,18 @@ public class Turno
 		if (velocitap1 > velocitap2)
 
 		{
+			primoAdAttaccare = personaggio1.getNome();
 			p1 = personaggio1;
 			p2 = personaggio2;
+			secondoAdAttaccare = personaggio2.getNome();
 		}
 		else
 
 		{
+			primoAdAttaccare = personaggio2.getNome();
 			p1 = personaggio2;
 			p2 = personaggio1;
+			secondoAdAttaccare = personaggio1.getNome();
 		}
 		return new Personaggio[]{p1, p2};
 
