@@ -93,86 +93,18 @@ public class Turno
 		Personaggio p2 = ordine[1];
 		secondoAdAttaccare = p2.getNome();
 
-		vitaPersonaggio1 = p1.getVita();
-		vitaPersonaggio2 = p2.getVita();
-		if (random.nextInt(1, 11) >= p2.getEvasione())
 
 
-		{
-			evasoPersonaggio1 = false;
-			crittatoPersonaggio1 = false;
-			long dannoCritico = 0;
-			if (random.nextInt(1, 11) <= p1.getCritico())
-			{
-
-				dannoCritico = (p1.getAttacco() - p2.getDifesa()) + p1.getAttacco();
-				crittatoPersonaggio1 = true;
-			}
-
-			long danno = ((p1.getAttacco() - p2.getDifesa()));
-
-			if ((danno) < (p2.getDifesa() * 40 / 100))
-
-				danno = (p1.getAttacco() * 40 / 100);
-			danno = dannoCritico + danno;
-			dannoPersonaggio1 = danno;
-			vitaPersonaggio2 = vitaPersonaggio2 - danno;
-			p2.setVita(vitaPersonaggio2);
-
-			System.out.println(
-					"Il colpo di " + p1.getNome() +
-							" ha colpito " + p2.getNome() +
-							(crittatoPersonaggio1 ? " e ha crittato" : "") +
-							" infliggendogli " + danno + " danni,ora la vita di " + p2.getNome() + " è " + p2.getVita()
-			);
-
-		}
-		else
-		{
-			System.out.println(p2.getNome() + " ha schivato l' attacco di " + p1.getNome());
-			evasoPersonaggio1 = true;
-		}
-
+		int a =0;
+		eseguiAttacco(p1,p2,a);
+		a=1;
+		Personaggio c = null;
 		if (p2.getVita() > 0)//gruppo R6 mi ha aiuto
-		{
+			c = p2;
+		p1 = p2;
+		p2 = c;
+		eseguiAttacco(p1,p2,a);
 
-			if (random.nextInt(1, 11) >= p1.getEvasione())
-
-			{
-				evasoPersonaggio2 = false;
-				crittatoPersonaggio2 = false;
-				long dannoCritico1 = 0;
-				if (random.nextInt(1, 11) <= p2.getCritico())
-				{
-					dannoCritico1 = (p2.getAttacco() - p1.getDifesa()) + p2.getAttacco();
-					crittatoPersonaggio2 = true;
-				}
-
-				long danno1 = ((p2.getAttacco() - p1.getDifesa()));
-
-				if ((danno1) < (p1.getDifesa() * 40 / 100))
-
-					danno1 = (p2.getAttacco() * 40 / 100);
-				danno1 = dannoCritico1 + danno1;
-				dannoPersonaggio2 = danno1;
-				vitaPersonaggio1 = vitaPersonaggio1 - danno1;
-				p1.setVita(vitaPersonaggio1);
-
-				System.out.println(
-						"Il colpo di " + p2.getNome() +
-								" ha colpito " + p1.getNome() +
-								(crittatoPersonaggio2 ? " e ha crittato" : "") +
-								" infliggendogli " + danno1 + " danni, ora la vita di " + p1.getNome() + " è " + p1.getVita()
-				);
-
-			}
-			else
-			{
-				System.out.println(p1.getNome() + " ha schivato l'attacco di " + p2.getNome());
-				evasoPersonaggio2 = true;
-			}
-
-		}
 
 
 	}
@@ -213,6 +145,77 @@ public class Turno
 		}
 		return new Personaggio[]{p1, p2};
 
+	}
+
+	public void attaccoNormale()
+	{
+
+	}
+
+	public void attaccoPesante(Personaggio personaggio1, Personaggio personaggio2)
+	{
+
+
+
+	}
+	private void eseguiAttacco(Personaggio p1, Personaggio p2,  int a) {
+		Random random = new Random();
+		long danno = 0;
+		boolean evaso = false;
+		boolean crittato = false;
+
+
+		// Determina se il difensore evade
+		if (random.nextInt(1, 11) >= p2.getEvasione()) {
+			evaso = false;
+
+			// Calcolo del danno critico
+			long dannoCritico = 0;
+			if (random.nextInt(1, 11) <= p1.getCritico()) {
+				dannoCritico = (p1.getAttacco() - p2.getDifesa()) + p1.getAttacco();
+				crittato = true;
+			}
+
+			// Calcolo del danno base
+			danno = Math.max(
+					(p1.getAttacco() - p2.getDifesa()),
+					p1.getAttacco() * 40 / 100
+			);
+			danno += dannoCritico;
+
+			// Aggiornamento della vita del difensore
+			p2.setVita(p2.getVita() - danno);
+		} else {
+			evaso = true;
+		}
+
+		// Aggiorna le variabili di stato per il turno
+		if (a==0) {
+			dannoPersonaggio1 = danno;
+			evasoPersonaggio1 = evaso;
+			crittatoPersonaggio1 = crittato;
+			vitaPersonaggio2 = p2.getVita();
+
+		} else {
+			dannoPersonaggio2 = danno;
+			evasoPersonaggio2 = evaso;
+			crittatoPersonaggio2 = crittato;
+			vitaPersonaggio1 = p2.getVita();
+		}
+
+
+
+		// Stampa del risultato
+		if (evaso) {
+			System.out.println(p2.getNome() + " ha schivato l'attacco di " + p1.getNome());
+		} else {
+			System.out.println(
+					"Il colpo di " + p1.getNome() +
+							" ha colpito " + p2.getNome() +
+							(crittato ? " e ha crittato" : "") +
+							" infliggendogli " + danno + " danni, ora la vita di " + p2.getNome() + " è " + p2.getVita()
+			);
+		}
 	}
 
 }
