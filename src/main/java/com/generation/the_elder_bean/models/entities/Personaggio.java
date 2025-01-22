@@ -8,7 +8,7 @@ import java.util.List;
 public class Personaggio extends BaseEntity
 {
 	private String nome;
-	private long attacco, difesa, evasione, velocita, critico,vita, esperienza, livello, stamina,gold;
+	private long attacco, difesa, evasione, velocita, critico, vita;
 
 
 	public long getAttacco()
@@ -26,8 +26,10 @@ public class Personaggio extends BaseEntity
 		return nome;
 	}
 
-	public void setNome(String nome) throws IllegalArgumentException {
-		if (nome == null) {
+	public void setNome(String nome) throws IllegalArgumentException
+	{
+		if (nome == null)
+		{
 			throw new IllegalArgumentException("Ti sei dimenticato di mettere il nome");
 		}
 
@@ -74,25 +76,6 @@ public class Personaggio extends BaseEntity
 		this.critico = critico;
 	}
 
-	public long getEsperienza()
-	{
-		return esperienza;
-	}
-
-	public void setEsperienza(long esperienza)
-	{
-		this.esperienza = esperienza;
-	}
-
-	public long getLivello()
-	{
-		return livello;
-	}
-
-	public void setLivello(long livello)
-	{
-		this.livello = livello;
-	}
 
 	public long getVita()
 	{
@@ -104,23 +87,4 @@ public class Personaggio extends BaseEntity
 		this.vita = vita;
 	}
 
-	public long getStamina()
-	{
-		return stamina;
-	}
-
-	public void setStamina(long stamina)
-	{
-		this.stamina = stamina;
-	}
-
-	public long getGold()
-	{
-		return gold;
-	}
-
-	public void setGold(long gold)
-	{
-		this.gold = gold;
-	}
 }

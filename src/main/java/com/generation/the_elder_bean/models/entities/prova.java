@@ -27,8 +27,7 @@ public class prova
 		p1.setVelocita(4);
 		p1.setCritico(2);
 		p1.setVita(200);
-		p1.setEsperienza(0);
-		p1.setLivello(1);
+
 
 		// Impostazione attributi per p2
 		p2.setNome("Assassino");
@@ -38,12 +37,11 @@ public class prova
 		p2.setVelocita(6);
 		p2.setCritico(4);
 		p2.setVita(200);
-		p2.setEsperienza(0);
-		p2.setLivello(1);
+
 		Combattimento c = new Combattimento(p1, p2);
 		c.combatti();
 		String json = mapper.writeValueAsString(c);
-
+		System.out.println(json);
 	}
 }
 

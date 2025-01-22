@@ -9,8 +9,8 @@ public class Turno
 	@JsonIgnore
 	private Personaggio personaggio1, personaggio2;
 	private String primoAdAttaccare, secondoAdAttaccare;
-	private long vitaPersonaggio1, vitaPersonaggio2, dannoPersonaggio1, dannoPersonaggio2;
-	private boolean evasoPersonaggio1, evasoPersonaggio2, crittatoPersonaggio1, crittatoPersonaggio2;
+	private long vitaPrimoAdAttaccare, vitaSecondoAdAttaccare, dannoPrimoAdAttaccare, dannoSecondoAdAttaccare;
+	private boolean evasoPrimoAdAttacare, evasoSecondoAdAttaccare, crittatoPrimoAdAttaccare, crittatoSecondoAdAttaccare;
 
 	public String getPrimoAdAttaccare()
 	{
@@ -22,44 +22,44 @@ public class Turno
 		return secondoAdAttaccare;
 	}
 
-	public long getVitaPersonaggio1()
+	public long getVitaPrimoAdAttaccare()
 	{
-		return vitaPersonaggio1;
+		return vitaPrimoAdAttaccare;
 	}
 
-	public long getVitaPersonaggio2()
+	public long getVitaSecondoAdAttaccare()
 	{
-		return vitaPersonaggio2;
+		return vitaSecondoAdAttaccare;
 	}
 
-	public long getDannoPersonaggio1()
+	public long getDannoPrimoAdAttaccare()
 	{
-		return dannoPersonaggio1;
+		return dannoPrimoAdAttaccare;
 	}
 
-	public long getDannoPersonaggio2()
+	public long getDannoSecondoAdAttaccare()
 	{
-		return dannoPersonaggio2;
+		return dannoSecondoAdAttaccare;
 	}
 
-	public boolean isEvasoPersonaggio1()
+	public boolean isEvasoPrimoAdAttacare()
 	{
-		return evasoPersonaggio1;
+		return evasoPrimoAdAttacare;
 	}
 
-	public boolean isEvasoPersonaggio2()
+	public boolean isEvasoSecondoAdAttaccare()
 	{
-		return evasoPersonaggio2;
+		return evasoSecondoAdAttaccare;
 	}
 
-	public boolean isCrittatoPersonaggio1()
+	public boolean isCrittatoPrimoAdAttaccare()
 	{
-		return crittatoPersonaggio1;
+		return crittatoPrimoAdAttaccare;
 	}
 
-	public boolean isCrittatoPersonaggio2()
+	public boolean isCrittatoSecondoAdAttaccare()
 	{
-		return crittatoPersonaggio2;
+		return crittatoSecondoAdAttaccare;
 	}
 
 	public Personaggio getPersonaggio2()
@@ -94,19 +94,21 @@ public class Turno
 		secondoAdAttaccare = p2.getNome();
 
 
+		int a = 0;
+		eseguiAttacco(p1, p2, a);
 
-		int a =0;
-		eseguiAttacco(p1,p2,a);
-		a=1;
-		Personaggio c = null;
-		if (p2.getVita() > 0)//gruppo R6 mi ha aiuto
-			c = p2;
-		p1 = p2;
-		p2 = c;
-		eseguiAttacco(p1,p2,a);
+		a = 1;
 
+		if (p2.getVita() > 0)
+		{
+			Personaggio temp = p1; // Salva il valore corrente di p1
+			p1 = p2; // Assegna p2 a p1
+			p2 = temp; // Ripristina il valore originale di p1 in p2
+			eseguiAttacco(p1, p2, a);
+		}
+		else vitaPrimoAdAttaccare =p1.getVita();
 
-
+		System.out.println("---------------------------------------------------------------------");
 	}
 
 	//calcola chi inizia il turno
@@ -156,22 +158,24 @@ public class Turno
 	{
 
 
-
 	}
-	private void eseguiAttacco(Personaggio p1, Personaggio p2,  int a) {
+
+	private void eseguiAttacco(Personaggio p1, Personaggio p2, int a)
+	{
 		Random random = new Random();
 		long danno = 0;
 		boolean evaso = false;
 		boolean crittato = false;
 
-
 		// Determina se il difensore evade
-		if (random.nextInt(1, 11) >= p2.getEvasione()) {
+		if (random.nextInt(1, 11) >= p2.getEvasione())
+		{
 			evaso = false;
 
 			// Calcolo del danno critico
 			long dannoCritico = 0;
-			if (random.nextInt(1, 11) <= p1.getCritico()) {
+			if (random.nextInt(1, 11) <= p1.getCritico())
+			{
 				dannoCritico = (p1.getAttacco() - p2.getDifesa()) + p1.getAttacco();
 				crittato = true;
 			}
@@ -182,33 +186,40 @@ public class Turno
 					p1.getAttacco() * 40 / 100
 			);
 			danno += dannoCritico;
-
-			// Aggiornamento della vita del difensore
-			p2.setVita(p2.getVita() - danno);
-		} else {
+		}
+		else
+		{
 			evaso = true;
 		}
 
-		// Aggiorna le variabili di stato per il turno
-		if (a==0) {
-			dannoPersonaggio1 = danno;
-			evasoPersonaggio1 = evaso;
-			crittatoPersonaggio1 = crittato;
-			vitaPersonaggio2 = p2.getVita();
+		// Aggiorna la vita del difensore
+		p2.setVita(p2.getVita() - danno);
 
-		} else {
-			dannoPersonaggio2 = danno;
-			evasoPersonaggio2 = evaso;
-			crittatoPersonaggio2 = crittato;
-			vitaPersonaggio1 = p2.getVita();
+		// Aggiorna le variabili di stato per il turno
+		if (a == 0)
+		{
+			dannoPrimoAdAttaccare = danno;
+			evasoSecondoAdAttaccare = evaso;
+			crittatoPrimoAdAttaccare = crittato;
+			vitaSecondoAdAttaccare = p2.getVita();
+
+		}
+		else
+		{
+			dannoSecondoAdAttaccare = danno;
+			evasoPrimoAdAttacare = evaso;
+			crittatoSecondoAdAttaccare = crittato;
+			vitaPrimoAdAttaccare = p2.getVita();
+
 		}
 
-
-
 		// Stampa del risultato
-		if (evaso) {
+		if (evaso)
+		{
 			System.out.println(p2.getNome() + " ha schivato l'attacco di " + p1.getNome());
-		} else {
+		}
+		else
+		{
 			System.out.println(
 					"Il colpo di " + p1.getNome() +
 							" ha colpito " + p2.getNome() +
@@ -217,6 +228,7 @@ public class Turno
 			);
 		}
 	}
+
 
 }
 
