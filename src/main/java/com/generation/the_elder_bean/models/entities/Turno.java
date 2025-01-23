@@ -9,7 +9,7 @@ public class Turno
 	@JsonIgnore
 	private Personaggio personaggio1, personaggio2;
 	private String primoAdAttaccare, secondoAdAttaccare;
-	private long vitaPrimoAdAttaccare, vitaSecondoAdAttaccare, dannoPrimoAdAttaccare, dannoSecondoAdAttaccare;
+	private int vitaPrimoAdAttaccare, vitaSecondoAdAttaccare, dannoPrimoAdAttaccare, dannoSecondoAdAttaccare;
 	private boolean evasoPrimoAdAttacare, evasoSecondoAdAttaccare, crittatoPrimoAdAttaccare, crittatoSecondoAdAttaccare;
 
 	public String getPrimoAdAttaccare()
@@ -22,22 +22,22 @@ public class Turno
 		return secondoAdAttaccare;
 	}
 
-	public long getVitaPrimoAdAttaccare()
+	public int getVitaPrimoAdAttaccare()
 	{
 		return vitaPrimoAdAttaccare;
 	}
 
-	public long getVitaSecondoAdAttaccare()
+	public int getVitaSecondoAdAttaccare()
 	{
 		return vitaSecondoAdAttaccare;
 	}
 
-	public long getDannoPrimoAdAttaccare()
+	public int getDannoPrimoAdAttaccare()
 	{
 		return dannoPrimoAdAttaccare;
 	}
 
-	public long getDannoSecondoAdAttaccare()
+	public int getDannoSecondoAdAttaccare()
 	{
 		return dannoSecondoAdAttaccare;
 	}
@@ -95,7 +95,11 @@ public class Turno
 
 
 		int a = 0;
-		eseguiAttacco(p1, p2, a);
+		int b = 0;
+		if (b == 0)
+		{
+			eseguiAttacco(p1, p2, a);
+		}
 
 		a = 1;
 
@@ -104,9 +108,14 @@ public class Turno
 			Personaggio temp = p1; // Salva il valore corrente di p1
 			p1 = p2; // Assegna p2 a p1
 			p2 = temp; // Ripristina il valore originale di p1 in p2
-			eseguiAttacco(p1, p2, a);
+
+			b = 0;
+			if (b == 0)
+			{
+				eseguiAttacco(p1, p2, a);
+			}
 		}
-		else vitaPrimoAdAttaccare =p1.getVita();
+		else vitaPrimoAdAttaccare = p1.getVita();
 
 		System.out.println("---------------------------------------------------------------------");
 	}
@@ -115,8 +124,8 @@ public class Turno
 	public Personaggio[] velocità(Personaggio personaggio1, Personaggio personaggio2)
 	{
 		Random random = new Random();
-		long velocitap1 = 0;
-		long velocitap2 = 0;
+		int velocitap1 = 0;
+		int velocitap2 = 0;
 		Personaggio p1 = null;
 		Personaggio p2 = null;
 		do
@@ -154,16 +163,28 @@ public class Turno
 
 	}
 
-	public void attaccoPesante(Personaggio personaggio1, Personaggio personaggio2)
+	public void attaccoPesante(Personaggio p1)
 	{
+		p1.setAttacco(p1.getAttacco() * 2);
+		p1.setDifesa(p1.getDifesa() - 4);
+	}
 
+	public void difesaPotenziata(Personaggio p1, int b)
+	{
+		p1.setDifesa(p1.getDifesa() + 3);
+		b = 1;
+	}
 
+	public void attaccoPerforante(Personaggio p1, Personaggio p2)
+	{
+		p2.setDifesa((Math.round(p2.getDifesa() * 3) / 10) + p2.getDifesa());
+		;
 	}
 
 	private void eseguiAttacco(Personaggio p1, Personaggio p2, int a)
 	{
 		Random random = new Random();
-		long danno = 0;
+		int danno = 0;
 		boolean evaso = false;
 		boolean crittato = false;
 
@@ -173,7 +194,7 @@ public class Turno
 			evaso = false;
 
 			// Calcolo del danno critico
-			long dannoCritico = 0;
+			int dannoCritico = 0;
 			if (random.nextInt(1, 11) <= p1.getCritico())
 			{
 				dannoCritico = (p1.getAttacco() - p2.getDifesa()) + p1.getAttacco();
@@ -193,9 +214,11 @@ public class Turno
 		}
 
 		// Aggiorna la vita del difensore
+
 		p2.setVita(p2.getVita() - danno);
 
 		// Aggiorna le variabili di stato per il turno
+
 		if (a == 0)
 		{
 			dannoPrimoAdAttaccare = danno;

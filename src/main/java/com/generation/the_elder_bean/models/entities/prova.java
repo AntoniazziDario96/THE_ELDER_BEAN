@@ -35,7 +35,7 @@ public class prova
 		p2.setDifesa(2);
 		p2.setEvasione(6);
 		p2.setVelocita(6);
-		p2.setCritico(4);
+		p2.setCritico(3);
 		p2.setVita(200);
 
 		Combattimento c = new Combattimento(p1, p2);

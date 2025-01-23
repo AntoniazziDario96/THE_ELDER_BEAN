@@ -68,7 +68,7 @@ public class Combattimento
 		if (personaggio1.getVita() > 0)
 		{
 
-			System.out.println(personaggio1.getNome() + " ha obliterato l'esistenza di " + personaggio2.getNome());
+			System.out.println(personaggio1.getNome() + " ha obliterato l'esistenza di " + personaggio2.getNome()+" dalla faccia della terra");
 			personaggioVincente = personaggio1;
 		}
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/combattimento")
+@RequestMapping("/api/combattimento")
 public class CombattimentoController
 {
 
@@ -38,4 +38,5 @@ public class CombattimentoController
 		Personaggio a = combatHelper.combattenteByid(id);
 		return ResponseEntity.ok(a);
 	}
+
 }

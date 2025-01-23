@@ -5,6 +5,8 @@ import com.generation.the_elder_bean.models.entities.Personaggio;
 import com.generation.the_elder_bean.models.repositories.PersonaggioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 public interface ControllerHelper
 {
 
@@ -12,4 +14,6 @@ public interface ControllerHelper
 	Personaggio combattenteByid(long id);
 
 	Combattimento combattiamoooo(long id1, long id2);
+
+	List<Personaggio> getAllCombattenti();
 }

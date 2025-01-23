@@ -6,6 +6,8 @@ import com.generation.the_elder_bean.models.repositories.PersonaggioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ControllerHelperImpl implements ControllerHelper
 {
@@ -33,5 +35,11 @@ public class ControllerHelperImpl implements ControllerHelper
 		Combattimento combat = new Combattimento(pg1, pg2);
 		combat.combatti();
 		return combat;
+	}
+
+	@Override
+	public List<Personaggio> getAllCombattenti()
+	{
+		return pgRep.findAll();
 	}
 }

@@ -8,15 +8,84 @@ import java.util.List;
 public class Personaggio extends BaseEntity
 {
 	private String nome;
-	private long attacco, difesa, evasione, velocita, critico, vita;
+	private int attacco, difesa, evasione, velocita, critico, vita;
+	private int durataBuffAttacco, durataBuffDifesa, durataBuffEvasione, durataBuffVelocita, durataBuffCritico;
+	private int attaccoBuffato, difesaBuffata, evasioneBuffata, velocitaBuffato, criticoBuffato;
+	private String immagine;
 
-
-	public long getAttacco()
+	public String getImmagine()
 	{
-		return attacco;
+		return immagine;
 	}
 
-	public void setAttacco(long attacco)
+	public void setImmagine(String immagine)
+	{
+		this.immagine = immagine;
+	}
+
+	public void setDurataBuffAttacco(int durataBuffAttacco)
+	{
+		this.durataBuffAttacco = durataBuffAttacco;
+	}
+
+	public void setDurataBuffDifesa(int durataBuffDifesa)
+	{
+		this.durataBuffDifesa = durataBuffDifesa;
+	}
+
+	public void setDurataBuffEvasione(int durataBuffEvasione)
+	{
+		this.durataBuffEvasione = durataBuffEvasione;
+	}
+
+	public void setDurataBuffVelocita(int durataBuffVelocita)
+	{
+		this.durataBuffVelocita = durataBuffVelocita;
+	}
+
+	public void setDurataBuffCritico(int durataBuffCritico)
+	{
+		this.durataBuffCritico = durataBuffCritico;
+	}
+
+	public void setAttaccoBuffato(int attaccoBuffato)
+	{
+		this.attaccoBuffato = attaccoBuffato;
+	}
+
+	public void setDifesaBuffata(int difesaBuffata)
+	{
+		this.difesaBuffata = difesaBuffata;
+	}
+
+	public void setEvasioneBuffata(int evasioneBuffata)
+	{
+		this.evasioneBuffata = evasioneBuffata;
+	}
+
+	public void setVelocitaBuffato(int velocitaBuffato)
+	{
+		this.velocitaBuffato = velocitaBuffato;
+	}
+
+	public void setCriticoBuffato(int criticoBuffato)
+	{
+		this.criticoBuffato = criticoBuffato;
+	}
+
+	public int getAttacco()
+	{
+		if (durataBuffAttacco == 0)
+		{
+			return attacco;
+
+		}
+		else
+			return attaccoBuffato + attacco;
+	}
+
+
+	public void setAttacco(int attacco)
 	{
 		this.attacco = attacco;
 	}
@@ -36,55 +105,73 @@ public class Personaggio extends BaseEntity
 		this.nome = nome;
 	}
 
-	public long getDifesa()
+	public int getDifesa()
 	{
-		return difesa;
+		if (durataBuffDifesa == 0)
+		{
+			return difesa;
+		}
+		return difesa + difesaBuffata;
 	}
 
-	public void setDifesa(long difesa)
+
+	public void setDifesa(int difesa)
 	{
 		this.difesa = difesa;
 	}
 
-	public long getEvasione()
+	public int getEvasione()
 	{
-		return evasione;
+		if (durataBuffEvasione == 0)
+		{
+			return evasione;
+		}
+		return evasione + evasioneBuffata;
 	}
 
-	public void setEvasione(long evasione)
+	public void setEvasione(int evasione)
 	{
 		this.evasione = evasione;
 	}
 
-	public long getVelocita()
+	public int getVelocita()
 	{
+		if (durataBuffVelocita == 0)
+		{
+			return velocita + velocitaBuffato;
+		}
 		return velocita;
 	}
 
-	public void setVelocita(long velocita)
+	public void setVelocita(int velocita)
 	{
 		this.velocita = velocita;
 	}
 
-	public long getCritico()
+	public int getCritico()
 	{
+		if (durataBuffCritico == 0)
+		{
+			return critico + criticoBuffato;
+		}
 		return critico;
 	}
 
-	public void setCritico(long critico)
+	public void setCritico(int critico)
 	{
 		this.critico = critico;
 	}
 
 
-	public long getVita()
+	public int getVita()
 	{
 		return vita;
 	}
 
-	public void setVita(long vita)
+	public void setVita(int vita)
 	{
 		this.vita = vita;
 	}
+
 
 }
