@@ -1,6 +1,7 @@
 package com.generation.the_elder_bean.models.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 
 import java.util.List;
 
@@ -8,10 +9,179 @@ import java.util.List;
 public class Personaggio extends BaseEntity
 {
 	private String nome;
-	private int attacco, difesa, evasione, velocita, critico, vita;
-	private int durataBuffAttacco, durataBuffDifesa, durataBuffEvasione, durataBuffVelocita, durataBuffCritico;
-	private int attaccoBuffato, difesaBuffata, evasioneBuffata, velocitaBuffato, criticoBuffato;
+	public int attacco, difesa, evasione, velocita, critico, vita;
+	@Transient
+	private int durataBuffAttacco, durataBuffDifesa, durataBuffEvasione, durataBuffVelocita, durataBuffCritico, durataNerfAttacco, durataNerfDifesa, durataNerfEvasione, durataNerfVelocita, durataNerfCritico;
+	@Transient
+	private int attaccoBuffato, difesaBuffata, evasioneBuffata, velocitaBuffato, criticoBuffato, attaccoNerfato, difesaNerfata, evasioneNerfato, velocitaNerfata, criticoNerfato;
 	private String immagine;
+	@Transient
+	private boolean curaUsata;
+
+	public int getDurataBuffAttacco()
+	{
+		return durataBuffAttacco;
+	}
+
+	public int getDurataBuffDifesa()
+	{
+		return durataBuffDifesa;
+	}
+
+	public int getDurataBuffEvasione()
+	{
+		return durataBuffEvasione;
+	}
+
+	public int getDurataBuffVelocita()
+	{
+		return durataBuffVelocita;
+	}
+
+	public int getDurataBuffCritico()
+	{
+		return durataBuffCritico;
+	}
+
+	public int getDurataNerfAttacco()
+	{
+		return durataNerfAttacco;
+	}
+
+	public int getDurataNerfDifesa()
+	{
+		return durataNerfDifesa;
+	}
+
+	public int getDurataNerfEvasione()
+	{
+		return durataNerfEvasione;
+	}
+
+	public int getDurataNerfVelocita()
+	{
+		return durataNerfVelocita;
+	}
+
+	public int getDurataNerfCritico()
+	{
+		return durataNerfCritico;
+	}
+
+	public int getAttaccoBuffato()
+	{
+		return attaccoBuffato;
+	}
+
+	public int getDifesaBuffata()
+	{
+		return difesaBuffata;
+	}
+
+	public int getEvasioneBuffata()
+	{
+		return evasioneBuffata;
+	}
+
+	public int getVelocitaBuffato()
+	{
+		return velocitaBuffato;
+	}
+
+	public int getCriticoBuffato()
+	{
+		return criticoBuffato;
+	}
+
+	public int getAttaccoNerfato()
+	{
+		return attaccoNerfato;
+	}
+
+	public int getDifesaNerfata()
+	{
+		return difesaNerfata;
+	}
+
+	public int getEvasioneNerfato()
+	{
+		return evasioneNerfato;
+	}
+
+	public int getVelocitaNerfata()
+	{
+		return velocitaNerfata;
+	}
+
+	public int getCriticoNerfato()
+	{
+		return criticoNerfato;
+	}
+
+	public boolean isCuraUsata()
+	{
+		return curaUsata;
+	}
+
+	public boolean curaUsata()
+	{
+		return curaUsata;
+	}
+
+	public void setCuraUsata(boolean curaUsata)
+	{
+		this.curaUsata = curaUsata;
+	}
+
+	public void setDurataNerfAttacco(int durataNerfAttacco)
+	{
+		this.durataNerfAttacco = durataNerfAttacco;
+	}
+
+	public void setDurataNerfDifesa(int durataNerfDifesa)
+	{
+		this.durataNerfDifesa = durataNerfDifesa;
+	}
+
+	public void setDurataNerfEvasione(int durataNerfEvasione)
+	{
+		this.durataNerfEvasione = durataNerfEvasione;
+	}
+
+	public void setDurataNerfVelocita(int durataNerfVelocita)
+	{
+		this.durataNerfVelocita = durataNerfVelocita;
+	}
+
+	public void setDurataNerfCritico(int durataNerfCritico)
+	{
+		this.durataNerfCritico = durataNerfCritico;
+	}
+
+	public void setAttaccoNerfato(int attaccoNerfato)
+	{
+		this.attaccoNerfato = attaccoNerfato;
+	}
+
+	public void setDifesaNerfata(int difesaNerfata)
+	{
+		this.difesaNerfata = difesaNerfata;
+	}
+
+	public void setEvasioneNerfato(int evasioneNerfato)
+	{
+		this.evasioneNerfato = evasioneNerfato;
+	}
+
+	public void setVelocitaNerfata(int velocitaNerfata)
+	{
+		this.velocitaNerfata = velocitaNerfata;
+	}
+
+	public void setCriticoNerfato(int criticoNerfato)
+	{
+		this.criticoNerfato = criticoNerfato;
+	}
 
 	public String getImmagine()
 	{
@@ -75,13 +245,26 @@ public class Personaggio extends BaseEntity
 
 	public int getAttacco()
 	{
-		if (durataBuffAttacco == 0)
+		if (durataBuffAttacco == 0 && durataNerfAttacco == 0)
 		{
 			return attacco;
 
 		}
-		else
+		if (!(durataBuffAttacco == 0) && durataNerfAttacco == 0)
+		{
+
 			return attaccoBuffato + attacco;
+		}
+		if ((durataBuffAttacco == 0 && !(durataNerfAttacco == 0)))
+		{
+
+			return attacco - attaccoNerfato;
+		}
+		else
+		{
+
+			return attacco + attaccoBuffato - attaccoNerfato;
+		}
 	}
 
 
@@ -107,11 +290,25 @@ public class Personaggio extends BaseEntity
 
 	public int getDifesa()
 	{
-		if (durataBuffDifesa == 0)
+		if (durataBuffDifesa == 0 && durataNerfDifesa == 0)
 		{
 			return difesa;
 		}
-		return difesa + difesaBuffata;
+		else if (durataBuffDifesa != 0 && durataNerfDifesa == 0)
+		{
+
+			return difesa + difesaBuffata;
+		}
+		else if (durataBuffDifesa == 0 && durataNerfDifesa!=0)
+		{
+
+			return difesa - difesaNerfata;
+		}
+		else
+		{
+
+			return difesa + difesaBuffata - difesaNerfata;
+		}
 	}
 
 
@@ -122,11 +319,25 @@ public class Personaggio extends BaseEntity
 
 	public int getEvasione()
 	{
-		if (durataBuffEvasione == 0)
+		if (durataBuffEvasione == 0 && durataNerfEvasione == 0)
 		{
 			return evasione;
 		}
-		return evasione + evasioneBuffata;
+		if ((durataBuffEvasione != 0) && durataNerfEvasione == 0)
+		{
+
+			return evasione + evasioneBuffata;
+		}
+		if ((durataBuffEvasione == 0) && (durataNerfEvasione != 0))
+		{
+
+			return evasione - evasioneNerfato;
+		}
+		else
+		{
+
+			return evasione + evasioneBuffata - evasioneNerfato;
+		}
 	}
 
 	public void setEvasione(int evasione)
@@ -136,11 +347,22 @@ public class Personaggio extends BaseEntity
 
 	public int getVelocita()
 	{
-		if (durataBuffVelocita == 0)
+		if (durataBuffVelocita == 0 && durataNerfVelocita == 0)
 		{
+			return velocita;
+		}
+		if ((durataBuffVelocita == 0) && (durataNerfVelocita != 0))
+		{
+
+			return velocita -velocitaNerfata;
+		}
+		if ((durataNerfVelocita == 0) && (durataBuffVelocita != 0))
+		{
+
 			return velocita + velocitaBuffato;
 		}
-		return velocita;
+
+		return velocita + velocitaBuffato - velocitaNerfata;
 	}
 
 	public void setVelocita(int velocita)
@@ -150,11 +372,22 @@ public class Personaggio extends BaseEntity
 
 	public int getCritico()
 	{
-		if (durataBuffCritico == 0)
+		if (durataBuffCritico == 0 && durataNerfCritico == 0)
 		{
+			return critico;
+		}
+		if ((durataNerfCritico == 0) && (durataBuffCritico != 0))
+		{
+
 			return critico + criticoBuffato;
 		}
-		return critico;
+		if (durataNerfCritico != 0 && (durataBuffCritico == 0))
+		{
+
+
+			return critico - criticoNerfato;
+		}
+		return critico + criticoBuffato - criticoNerfato;
 	}
 
 	public void setCritico(int critico)
@@ -171,6 +404,22 @@ public class Personaggio extends BaseEntity
 	public void setVita(int vita)
 	{
 		this.vita = vita;
+	}
+
+
+
+	public void decrementDurations() {
+		// Decrementa ciascuna durata se maggiore di 0
+		if (durataBuffAttacco > 0) durataBuffAttacco--;
+		if (durataBuffDifesa > 0) durataBuffDifesa--;
+		if (durataBuffEvasione > 0) durataBuffEvasione--;
+		if (durataBuffVelocita > 0) durataBuffVelocita--;
+		if (durataBuffCritico > 0) durataBuffCritico--;
+		if (durataNerfAttacco > 0) durataNerfAttacco--;
+		if (durataNerfDifesa > 0) durataNerfDifesa--;
+		if (durataNerfEvasione > 0) durataNerfEvasione--;
+		if (durataNerfVelocita > 0) durataNerfVelocita--;
+		if (durataNerfCritico > 0) durataNerfCritico--;
 	}
 
 

@@ -12,6 +12,28 @@ public class Combattimento
 	private Personaggio personaggioVincente;
 	private List<Turno> turni;
 	private Personaggio personaggio1, personaggio2;
+	private String mosseP1, mosseP2;
+
+
+	public String getMosseP1()
+	{
+		return mosseP1;
+	}
+
+	public void setMosseP1(String mosseP1)
+	{
+		this.mosseP1 = mosseP1;
+	}
+
+	public String getMosseP2()
+	{
+		return mosseP2;
+	}
+
+	public void setMosseP2(String mosseP2)
+	{
+		this.mosseP2 = mosseP2;
+	}
 
 	public Combattimento(Personaggio personaggio1, Personaggio personaggio2)
 	{
@@ -61,7 +83,7 @@ public class Combattimento
 
 		while (personaggio1.getVita() > 0 && personaggio2.getVita() > 0)
 		{
-			Turno turno = new Turno(personaggio1, personaggio2);
+			Turno turno = new Turno(personaggio1, personaggio2,mosseP1,mosseP2);
 			turni.add(turno);
 
 		}
@@ -74,7 +96,7 @@ public class Combattimento
 
 		else
 		{
-			System.out.println(personaggio2.getNome() + " ha obliterato l'esistenza di " + personaggio1.getNome());
+			System.out.println(personaggio2.getNome() + " ha obliterato l'esistenza di " + personaggio1.getNome()+" dalla faccia della terra");
 			personaggioVincente = personaggio2;
 
 		}
