@@ -35,7 +35,7 @@ public class GeneraTurniController
 	{
 
 
-		Turno risultato = combatHelper.turnoGenerator(turno, mossap1, mossap2);
+		Turno risultato = combatHelper.turnoGenerator(turno, mossap1.toLowerCase(), mossap2.toLowerCase());
 
 
 		return ResponseEntity.ok(risultato);

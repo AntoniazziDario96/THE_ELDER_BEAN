@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/selezione")
+@RequestMapping("/api/personaggi")
 public class SelezionaPersonaggioController
 {
 
@@ -19,7 +19,7 @@ public class SelezionaPersonaggioController
 	ControllerHelper combatHelper;
 
 
-	@GetMapping("/listaPersonaggi")
+	@GetMapping
 	public List<Personaggio> getAllCombattenti()
 
 	{
