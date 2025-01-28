@@ -319,7 +319,7 @@ public class Turno
 
 	public void attaccoPesante(Personaggio p1)
 	{
-		p1.setAttaccoBuffato((int) (p1.attacco * 1.3));
+		p1.setAttaccoBuffato((int) (p1.attacco * 0.4));
 		p1.setDifesaNerfata((int) (p1.difesa * 0.5));
 		p1.setEvasioneNerfato((int) (p1.evasione * 0.5));
 		p1.setDurataNerfDifesa(2);
@@ -358,8 +358,10 @@ public class Turno
 	public void attaccoPerforante(Personaggio p2,Personaggio p1)
 	{
 		p2.setDifesaNerfata((int) (p2.difesa*0.5));
-		p2.setDurataNerfDifesa(3);
-		p1.setAttaccoNerfato(p2.getAttacco());
+		p2.setDurataNerfDifesa(2);
+		p2.setEvasioneNerfato((int) (p2.evasione*0.5));
+		p2.setDurataNerfEvasione(2);
+		p1.setAttaccoNerfato((int) (p2.getAttacco()*0.6));
 		p1.setDurataNerfAttacco(1);
 
 
